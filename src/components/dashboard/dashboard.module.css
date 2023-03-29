@@ -1,0 +1,11 @@
+.dashboard {
+    display: grid;
+}
+
+.title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 177.69%;
+    color: #444366;
+}
