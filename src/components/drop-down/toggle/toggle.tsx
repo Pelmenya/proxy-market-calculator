@@ -28,15 +28,12 @@ export const Toggle = forwardRef(
         | null
         | undefined,
     ) => {
-
-        const [ toggle, setToggle ] = useState(currentValue);
-
+        const [toggle, setToggle] = useState(currentValue);
+        const [isError, setIsError] = useState(false);
 
         useEffect(() => {
-            console.log(labelText);
             setToggle(currentValue);
         }, [currentValue]);
-       
 
         return (
             <div className={styles.wrapper}>
@@ -55,10 +52,13 @@ export const Toggle = forwardRef(
                         }
                     }}
                     onChange={() => setToggle(toggle)}
+                    onBlur={() => toggle ? setIsError(false) : setIsError(true)}
                 />
-                <span className={styles.error}>
-                    Поле обязательно для заполнения
-                </span>
+                {!toggle && isError && (
+                    <span className={styles.error}>
+                        Поле обязательно для заполнения
+                    </span>
+                )}
             </div>
         );
     },

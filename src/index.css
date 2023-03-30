@@ -16,6 +16,12 @@ body {
     --label-text: #2e2e42b3;
 }
 
+.dropdown-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .dropdown-item.active  {
     color: #333;
     text-decoration: none;

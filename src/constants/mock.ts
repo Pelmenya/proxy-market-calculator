@@ -60,3 +60,31 @@ export const periodTypes: TDropDownItems = [
         cost: 0.51,
     },
 ];
+
+export const countTypes: TDropDownItems = [
+    {
+        id: '0',
+        text: '1',
+        cost: 5.4,
+    },
+    {
+        id: '1',
+        text: '2',
+        cost: 154,
+    },
+    {
+        id: '2',
+        text: '3',
+        cost: 0.51,
+    },
+    {
+        id: '3',
+        text: '4',
+        cost: 0.51,
+    },
+    {
+        id: '4',
+        text: '5',
+        cost: 0.51,
+    },
+];

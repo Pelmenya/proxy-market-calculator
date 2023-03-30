@@ -36,10 +36,6 @@ export const Menu = forwardRef(
         const [isOpenMenu, setIsOpenMenu] = useState(false);
         const [value, setValue] = useState('');
 
-        useEffect(() => {
-            console.log(value);
-        }, [value]);
-
         return (
             <div
                 ref={ref}
