@@ -2,19 +2,40 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { Menu } from './menu/menu';
 import { Toggle, TToggle } from './toggle/toggle';
 
+export type TDropDownItem = {
+    id: string;
+    text: string;
+    cost: number;
+};
 
-export const DropDown = ({ placeholder, labelText, onClick, currentValue }: TToggle) => (
+export type TDropDownItems = Array<TDropDownItem>;
+
+export type TDropDownProps = TToggle & {
+    items: TDropDownItems;
+};
+
+export const DropDown = ({
+    id,
+    items,
+    placeholder,
+    labelText,
+    onClick,
+    currentValue,
+}: TDropDownProps) => (
     <Dropdown>
-        <Dropdown.Toggle as={Toggle} id="dropdown-custom-components" placeholder={placeholder} labelText={labelText} currentValue={currentValue}>
-            Custom toggle
-        </Dropdown.Toggle>
+        <Dropdown.Toggle
+            as={Toggle}
+            id={id}
+            placeholder={placeholder}
+            labelText={labelText}
+            currentValue={currentValue}
+        />
         <Dropdown.Menu as={Menu} onClick={onClick}>
-            <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-            <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-            <Dropdown.Item eventKey="3" active>
-                Orange
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+            {items.map((item) => (
+                <Dropdown.Item active={undefined} id={item.id} key={item.id}>
+                    {item.text}
+                </Dropdown.Item>
+            ))}
         </Dropdown.Menu>
     </Dropdown>
 );
