@@ -6,7 +6,7 @@ import { ProxyItem } from '../proxy-item/proxy-item';
 import styles from '../dashboard.module.css';
 import { TotalCost } from '../../total-cost/total-cost';
 
-export const DashboardStepOne = () => {
+export const DashboardStepTwo = () => {
     const clearBtnId = 'clear-button';
     const [isInit, setIsInit] = useState(false);
     const [totalCost, setTotalCost] = useState(0);
@@ -33,10 +33,17 @@ export const DashboardStepOne = () => {
     return (
         <div className={styles.wrapper}>
             <DashboardHead>
-                <StepOneHead
-                    buttonId={clearBtnId}
-                    onClick={handlerOnClickClearBtn}
-                />
+                <>
+                    <StepOneHead
+                        buttonId={clearBtnId}
+                        onClick={handlerOnClickClearBtn}
+                    />
+                    <ProxyItem
+                        handlerTotalCost={handlerTotalHost}
+                        handlerIsInit={setIsInit}
+                        isInit={isInit}
+                    />
+                </>
             </DashboardHead>
             <div className={styles.body}>
                 <ProxyItem

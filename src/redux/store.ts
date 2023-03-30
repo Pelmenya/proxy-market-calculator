@@ -1,8 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { calculatorSlice } from './slices/calculator';
 
 export const store = configureStore({
     reducer: {
-        
+        [calculatorSlice.name]: calculatorSlice.reducer,
     },
 });
 

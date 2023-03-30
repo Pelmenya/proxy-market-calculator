@@ -73,10 +73,7 @@ export const ProxyItem = ({
 
     useEffect(() => {
         if (isInit) {
-            if (typeof handlerTotalCost === 'function') {
-                handlerTotalCost(0);
-            }
-            if (typeof handlerTotalCost === 'function') {
+            if (typeof handlerIsInit === 'function') {
                 handlerIsInit(false);
             }
             setIsDisabledDropDowns(true);
