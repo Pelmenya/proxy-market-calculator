@@ -10,7 +10,7 @@ export const DashboardStepOne = () => {
     const [ isInit, setIsInit ] = useState(false);
     
     const handlerOnClickClearBtn = (e: SyntheticEvent<HTMLElement>) => {
-        if (e.target instanceof HTMLElement) {
+        if (e.target instanceof HTMLElement ) {
             const id = e.target.id;
             if (id === clearBtnId) {
                 setIsInit(true);

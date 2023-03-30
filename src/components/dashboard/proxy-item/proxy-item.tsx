@@ -2,8 +2,6 @@ import { SyntheticEvent, useState, useEffect } from 'react';
 import styles from './proxy-item.module.css';
 import {
     DropDown,
-    TDropDownItem,
-    TDropDownItems,
 } from '../../drop-down/drop-down';
 import {
     countryTypes,
@@ -11,12 +9,13 @@ import {
     periodTypes,
     proxyTypes,
     purposeTypes,
+    TDropDownItem,
+    TDropDownItems,
 } from '../../../constants/mock';
 
 const initItem: TDropDownItem = {
     id: '9999',
     text: '',
-    cost: 0,
 };
 
 export type TProxyItemProps = { isInit: boolean; handlerIsInit: (a: boolean) => void };

@@ -12,7 +12,7 @@ export const StepOneHead = ({ onClick, buttonId }: TStepOneProps) => {
         <div className={styles.wrapper}>
             <h2 className={styles.title}>Онлайн-калькулятор</h2>
             <button onClick={onClick} id={buttonId} className={styles.button}>
-                <ClearIcon className={styles.svg} id={buttonId}/>
+                <ClearIcon className={styles.svg}/>
                 <span className={styles.button__text} id={buttonId}>Очистить</span>
             </button>
         </div>

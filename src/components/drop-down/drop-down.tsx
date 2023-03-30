@@ -1,14 +1,8 @@
 import Dropdown from 'react-bootstrap/Dropdown';
+import { TDropDownItems } from '../../constants/mock';
 import { Menu } from './menu/menu';
 import { Toggle, TToggle } from './toggle/toggle';
 
-export type TDropDownItem = {
-    id: string;
-    text: string;
-    cost: number;
-};
-
-export type TDropDownItems = Array<TDropDownItem>;
 
 export type TDropDownProps = TToggle & {
     items: TDropDownItems;

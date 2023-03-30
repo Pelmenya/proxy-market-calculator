@@ -1,7 +1,8 @@
 import { TBaseProps } from '../../types/t-base-props';
 
-export const ClearIcon = ({ className }: TBaseProps) => (
+export const ClearIcon = ({ className, id }: TBaseProps) => (
     <svg
+        id={id}
         className={className}
         width="16"
         height="16"
