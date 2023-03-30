@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState, useEffect } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import { DashboardHead } from '../components/dashboard-head.tsx/dashboard-head';
 import { StepOneHead } from '../components/dashboard-head.tsx/step-one-head/step-one-head';
 import { ProxyItem } from '../proxy-item/proxy-item';
@@ -19,7 +19,6 @@ export const DashboardStepOne = () => {
         }
     };
 
-
     return (
         <div className={styles.wrapper}>
             <DashboardHead>
@@ -32,6 +31,7 @@ export const DashboardStepOne = () => {
                 <ProxyItem
                     handlerIsInit={setIsInit}
                     isInit={isInit}
+                    proxyId={0}
                 />
                 <TotalCost />
             </div>

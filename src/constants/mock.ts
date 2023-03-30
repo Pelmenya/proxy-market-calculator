@@ -16,6 +16,11 @@ export type TDropDownItem = {
     tarifs?: Tarif[];
 };
 
+export const initItem: TDropDownItem = {
+    id: '999999999',
+    text: '',
+};
+
 export type TDropDownItems = Array<TDropDownItem>;
 
 const periods = [1, 7, 30];

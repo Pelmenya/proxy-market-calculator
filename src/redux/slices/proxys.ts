@@ -1,21 +1,47 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { countTypes, initItem, TDropDownItem } from '../../constants/mock';
 
-export interface IProxysState {
-    totalCost: number;
-}
 
-const initialState: IProxysState = {
-    totalCost: 0,
+export type TProxy =
+    {
+        id: number;
+        purposeType: TDropDownItem;
+        proxyType: TDropDownItem;
+        periodType: TDropDownItem;
+        countryType: TDropDownItem;
+        countProxyType: TDropDownItem;
+    };
+
+export type TProxysState = {
+    proxys: TProxy[];
+};
+
+const initialState: TProxysState = {
+    proxys: [
+        {
+            id: 0,
+            purposeType: { ...initItem },
+            proxyType: { ...initItem },
+            periodType: { ...initItem },
+            countryType: { ...initItem },
+            countProxyType: countTypes[0],
+
+        },
+    ],
 };
 
 export const proxysSlice = createSlice({
     name: 'proxys', initialState,
     reducers: {
-        setFirstProxy(state, action) {
-            state.totalCost = action.payload;
+        setProxys(state, action) {
+            state.proxys = action.payload;
         },
+        setInitState(state) {
+            state.proxys = initialState.proxys;
+        },
+
     },
 },
 );
 
-export const { setFirstProxy } =  proxysSlice.actions;
+export const { setProxys, setInitState } = proxysSlice.actions;

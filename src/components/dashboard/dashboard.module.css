@@ -27,3 +27,26 @@
     padding-right: 30px;
     padding-top: 25px;
 }
+
+.back__button {
+    color: var(--black-text-light);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 0;
+    padding-right:  30px;
+}
+
+.back__icon {
+    fill: var(--black-text-light);
+    transform: rotate(180deg);
+}
+
+.back__link {
+    border-bottom: 1px solid var(--black-text-light);
+    line-height: 1;
+    color: var(--black-text-light);
+}

@@ -30,6 +30,7 @@ export const DashboardStepTwo = () => {
                     <ProxyItem
                         handlerIsInit={setIsInit}
                         isInit={isInit}
+                        proxyId={0}
                     />
                 </>
             </DashboardHead>

@@ -4,6 +4,7 @@ import { DropDown } from '../../drop-down/drop-down';
 import {
     countryTypes,
     countTypes,
+    initItem,
     periodTypes as periods,
     proxyTypes,
     purposeTypes,
@@ -13,32 +14,39 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getCalculatorState } from '../../../redux/selectors/calculator';
 import { setTotalCost } from '../../../redux/slices/total-cost';
-
-const initItem: TDropDownItem = {
-    id: '999999999',
-    text: '',
-};
+import { getProxysState } from '../../../redux/selectors/proxys';
+import { setInitState, setProxys } from '../../../redux/slices/proxys';
 
 export type TProxyItemProps = {
+    proxyId: number;
     isInit: boolean;
     handlerIsInit: (isInit: boolean) => void;
 };
 
 export const ProxyItem = ({
+    proxyId,
     isInit,
     handlerIsInit,
 }: TProxyItemProps) => {
     const dispatch = useAppDispatch();
-    const  { step } = useAppSelector(getCalculatorState);
+    const { step } = useAppSelector(getCalculatorState);
+    const { proxys } = useAppSelector(getProxysState);
 
     const [isDisableDropDowns, setIsDisabledDropDowns] = useState(true);
-    const [purposeType, setPurposeType] = useState<TDropDownItem>(initItem);
-    const [proxyType, setProxyType] = useState<TDropDownItem>(initItem);
-    const [periodType, setPeriodType] = useState<TDropDownItem>(initItem);
+
+    const [purposeType, setPurposeType] = useState<TDropDownItem>(proxys[proxyId].purposeType);
+    const [proxyType, setProxyType] = useState<TDropDownItem>(
+        proxys[proxyId].proxyType,
+    );
+    const [periodType, setPeriodType] = useState<TDropDownItem>(
+        proxys[proxyId].periodType,
+    );
     const [periodTypes, setPeriodTypes] = useState<TDropDownItem[]>(periods);
-    const [countryType, setCountryType] = useState<TDropDownItem>(initItem);
+    const [countryType, setCountryType] = useState<TDropDownItem>(
+        proxys[proxyId].countryType,
+    );
     const [countProxyType, setCountProxyType] = useState<TDropDownItem>(
-        countTypes[0],
+        proxys[proxyId].countProxyType,
     );
 
     const handlerOnClick = (
@@ -80,15 +88,11 @@ export const ProxyItem = ({
             if (typeof handlerIsInit === 'function') {
                 handlerIsInit(false);
                 if (step === 1) {
+                    setIsDisabledDropDowns(true);
                     dispatch(setTotalCost(0));
+                    dispatch(setInitState());
                 }
             }
-            setIsDisabledDropDowns(true);
-            setPurposeType(initItem);
-            setProxyType(initItem);
-            setCountryType(initItem);
-            setPeriodType(initItem);
-            setCountProxyType(countTypes[0]);
         }
     }, [isInit]);
 
@@ -121,7 +125,7 @@ export const ProxyItem = ({
 
     useEffect(() => {
         if (
-            step === 1 &&
+            !!purposeType.text &&
             !!countryType.text &&
             !!proxyType.text &&
             !!countProxyType.text &&
@@ -133,9 +137,19 @@ export const ProxyItem = ({
             if (total) {
                 total = total * Number(countProxyType.text);
                 dispatch(setTotalCost(total));
+                dispatch(
+                    setProxys([{
+                        id: proxyId,
+                        purposeType,
+                        proxyType,
+                        periodType,
+                        countryType,
+                        countProxyType,
+                    }]),
+                );
             }
         }
-    }, [step, countryType, proxyType, countProxyType, periodType]);
+    }, [step, countryType, proxyType, countProxyType, periodType, purposeType]);
 
     return (
         <form className={styles.container} name="ProxyItem">
