@@ -9,6 +9,7 @@ import { TotalCost } from '../../total-cost/total-cost';
 export const DashboardStepOne = () => {
     const clearBtnId = 'clear-button';
     const [ isInit, setIsInit ] = useState(false);
+    const [totalCost, setTotalCost] = useState(0);
     
     const handlerOnClickClearBtn = (e: SyntheticEvent<HTMLElement>) => {
         if (e.target instanceof HTMLElement ) {
@@ -19,14 +20,18 @@ export const DashboardStepOne = () => {
         }
     };
 
+    const handlerTotalHost = (cost: number) => {
+        setTotalCost(cost);
+    };
+
     return (
         <div className={styles.wrapper}>
             <DashboardHead>
                 <StepOneHead buttonId={clearBtnId} onClick={handlerOnClickClearBtn}/>
             </DashboardHead>
             <div className={styles.body}>
-                <ProxyItem handlerIsInit={setIsInit} isInit={isInit}/>
-                <TotalCost />
+                <ProxyItem handlerTotalCost={handlerTotalHost} handlerIsInit={setIsInit} isInit={isInit}/>
+                <TotalCost totalCost={totalCost}/>
             </div>
         </div>
     );

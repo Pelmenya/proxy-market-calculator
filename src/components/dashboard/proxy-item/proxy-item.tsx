@@ -18,21 +18,21 @@ const initItem: TDropDownItem = {
 
 export type TProxyItemProps = {
     isInit: boolean;
-    handlerIsInit: (a: boolean) => void;
+    handlerIsInit: (isInit: boolean) => void;
+    handlerTotalCost: (cost: number) => void;
 };
 
-export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
+export const ProxyItem = ({
+    isInit,
+    handlerIsInit,
+    handlerTotalCost,
+}: TProxyItemProps) => {
     const [isDisableDropDowns, setIsDisabledDropDowns] = useState(true);
-
     const [purposeType, setPurposeType] = useState<TDropDownItem>(initItem);
-
     const [proxyType, setProxyType] = useState<TDropDownItem>(initItem);
-
     const [periodType, setPeriodType] = useState<TDropDownItem>(initItem);
     const [periodTypes, setPeriodTypes] = useState<TDropDownItem[]>(periods);
-
     const [countryType, setCountryType] = useState<TDropDownItem>(initItem);
-
     const [countProxyType, setCountProxyType] = useState<TDropDownItem>(
         countTypes[0],
     );
@@ -73,7 +73,12 @@ export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
 
     useEffect(() => {
         if (isInit) {
-            handlerIsInit(false);
+            if (typeof handlerTotalCost === 'function') {
+                handlerTotalCost(0);
+            }
+            if (typeof handlerTotalCost === 'function') {
+                handlerIsInit(false);
+            }
             setIsDisabledDropDowns(true);
             setPurposeType(initItem);
             setProxyType(initItem);
@@ -92,7 +97,6 @@ export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
     // Фильтр
     useEffect(() => {
         if (countryType.tarifs) {
-            console.log(proxyType.text !== '');
             if (proxyType.text === '') {
                 if (countryType.tarifs) {
                     setPeriodType(countryType.tarifs[0]);
@@ -111,6 +115,23 @@ export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
         }
     }, [countryType, proxyType]);
 
+    useEffect(() => {
+        if (
+            typeof handlerTotalCost === 'function' &&
+            !!countryType.text &&
+            !!proxyType.text &&
+            !!countProxyType.text &&
+            !!periodType.text
+        ) {
+            let total = countryType.tarifs?.find(
+                (item) => item.text === periodType.text,
+            )?.cost;
+            if (total) {
+                total = total * Number(countProxyType.text);
+                handlerTotalCost(total);
+            }
+        }
+    }, [handlerTotalCost, countryType, proxyType, countProxyType, periodType]);
 
     return (
         <form className={styles.container} name="ProxyItem">
