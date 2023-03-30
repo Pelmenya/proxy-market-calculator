@@ -1,3 +1,4 @@
 export type TBaseProps = {
-    children: JSX.Element;
+    children?: JSX.Element;
+    className?: string;
 };

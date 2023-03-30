@@ -1,5 +1,6 @@
 .dashboard {
     display: grid;
+    color: var(--black-text);
 }
 
 .title {
@@ -8,4 +9,21 @@
     font-size: 30px;
     line-height: 177.69%;
     color: #444366;
+    margin-bottom: 10px;
+}
+
+.wrapper {
+    padding-top: 23px;
+    padding-bottom: 25px;
+    border-bottom: 1px;
+    background: #e7ecf0;
+    -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+}
+
+.body {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 25px;
 }

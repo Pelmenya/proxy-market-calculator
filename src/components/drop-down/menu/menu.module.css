@@ -1,0 +1,26 @@
+.menu {
+    width: 100%;
+    border-radius: 8px;
+    transform: translate(0px, 15px);
+    padding: 0;
+}
+
+.toggle {
+    padding-left: 14px;
+    padding-right: 50px;
+    min-height: 42px;
+    border-radius: 8px;
+}
+
+.toggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.toggle_noborder {
+    border: none;
+}
+
+.menu__list {
+    border-top: 1px solid rgba(0,0,0, 0.175);
+}

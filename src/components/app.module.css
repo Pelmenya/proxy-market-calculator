@@ -17,7 +17,7 @@
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-columns: 300px minmax(320px, 950px) auto;
+    grid-template-columns: 300px minmax(320px, 985px) auto;
 	grid-template-rows: 80px auto;
 
     grid-template-areas:
