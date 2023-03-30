@@ -10,6 +10,9 @@ import {
     TDropDownItem,
     TDropDownItems,
 } from '../../../constants/mock';
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
+import { getCalculatorState } from '../../../redux/selectors/calculator';
+import { setTotalCost } from '../../../redux/slices/total-cost';
 
 const initItem: TDropDownItem = {
     id: '999999999',
@@ -19,14 +22,15 @@ const initItem: TDropDownItem = {
 export type TProxyItemProps = {
     isInit: boolean;
     handlerIsInit: (isInit: boolean) => void;
-    handlerTotalCost: (cost: number) => void;
 };
 
 export const ProxyItem = ({
     isInit,
     handlerIsInit,
-    handlerTotalCost,
 }: TProxyItemProps) => {
+    const dispatch = useAppDispatch();
+    const  { step } = useAppSelector(getCalculatorState);
+
     const [isDisableDropDowns, setIsDisabledDropDowns] = useState(true);
     const [purposeType, setPurposeType] = useState<TDropDownItem>(initItem);
     const [proxyType, setProxyType] = useState<TDropDownItem>(initItem);
@@ -75,6 +79,9 @@ export const ProxyItem = ({
         if (isInit) {
             if (typeof handlerIsInit === 'function') {
                 handlerIsInit(false);
+                if (step === 1) {
+                    dispatch(setTotalCost(0));
+                }
             }
             setIsDisabledDropDowns(true);
             setPurposeType(initItem);
@@ -114,7 +121,7 @@ export const ProxyItem = ({
 
     useEffect(() => {
         if (
-            typeof handlerTotalCost === 'function' &&
+            step === 1 &&
             !!countryType.text &&
             !!proxyType.text &&
             !!countProxyType.text &&
@@ -125,10 +132,10 @@ export const ProxyItem = ({
             )?.cost;
             if (total) {
                 total = total * Number(countProxyType.text);
-                handlerTotalCost(total);
+                dispatch(setTotalCost(total));
             }
         }
-    }, [handlerTotalCost, countryType, proxyType, countProxyType, periodType]);
+    }, [step, countryType, proxyType, countProxyType, periodType]);
 
     return (
         <form className={styles.container} name="ProxyItem">

@@ -1,14 +1,14 @@
 import { Button } from 'react-bootstrap';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { getTotalCostState } from '../../redux/selectors/total-cost';
 import { setCalculatorStep } from '../../redux/slices/calculator';
 import styles from './total-cost.module.css';
 
-export type TTotalCostProps = {
-    totalCost?: number;
-};
 
-export const TotalCost = ({ totalCost }: TTotalCostProps) => {
+export const TotalCost = () => {
+    const { totalCost } = useAppSelector(getTotalCostState);
     const dispatch = useAppDispatch();
+
 
     return (
         <div className="container p-0 mt-3">

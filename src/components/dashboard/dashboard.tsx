@@ -14,7 +14,11 @@ export const Dashboard = ({ title }: TDashBoard) => {
 
     return (
         <div className={styles.dashboard}>
-            <h1 className={styles.title}>{title}</h1>
+            <div className="d-flex justify-content-between align-items-center">
+                <h1 className={styles.title}>{title}</h1>
+                {step === 2 && <div className='pe-4 me-2'>ddd </div>}{' '}
+            </div>
+
             {step === 1 && <DashboardStepOne />}
             {step === 2 && <DashboardStepTwo />}
         </div>

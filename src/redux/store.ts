@@ -1,9 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { calculatorSlice } from './slices/calculator';
+import { proxysSlice } from './slices/proxys';
+import { totalCostSlice } from './slices/total-cost';
 
 export const store = configureStore({
     reducer: {
         [calculatorSlice.name]: calculatorSlice.reducer,
+        [totalCostSlice.name]: totalCostSlice.reducer,
+        [proxysSlice.name]: proxysSlice.reducer,
     },
 });
 
