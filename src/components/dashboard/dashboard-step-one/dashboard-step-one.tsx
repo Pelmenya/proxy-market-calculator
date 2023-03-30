@@ -4,6 +4,7 @@ import { StepOneHead } from '../components/dashboard-head.tsx/step-one-head/step
 import { ProxyItem } from '../proxy-item/proxy-item';
 
 import styles from '../dashboard.module.css';
+import { TotalCost } from '../../total-cost/total-cost';
 
 export const DashboardStepOne = () => {
     const clearBtnId = 'clear-button';
@@ -25,6 +26,7 @@ export const DashboardStepOne = () => {
             </DashboardHead>
             <div className={styles.body}>
                 <ProxyItem handlerIsInit={setIsInit} isInit={isInit}/>
+                <TotalCost />
             </div>
         </div>
     );

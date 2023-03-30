@@ -5,7 +5,6 @@ import {
     ReactNode,
     SyntheticEvent,
     useState,
-    useEffect,
 } from 'react';
 
 import cn from 'classnames';

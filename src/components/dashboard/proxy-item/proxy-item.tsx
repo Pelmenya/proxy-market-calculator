@@ -1,12 +1,10 @@
 import { SyntheticEvent, useState, useEffect } from 'react';
 import styles from './proxy-item.module.css';
-import {
-    DropDown,
-} from '../../drop-down/drop-down';
+import { DropDown } from '../../drop-down/drop-down';
 import {
     countryTypes,
     countTypes,
-    periodTypes,
+    periodTypes as periods,
     proxyTypes,
     purposeTypes,
     TDropDownItem,
@@ -14,31 +12,30 @@ import {
 } from '../../../constants/mock';
 
 const initItem: TDropDownItem = {
-    id: '9999',
+    id: '999999999',
     text: '',
 };
 
-export type TProxyItemProps = { isInit: boolean; handlerIsInit: (a: boolean) => void };
+export type TProxyItemProps = {
+    isInit: boolean;
+    handlerIsInit: (a: boolean) => void;
+};
 
 export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
+    const [isDisableDropDowns, setIsDisabledDropDowns] = useState(true);
+
     const [purposeType, setPurposeType] = useState<TDropDownItem>(initItem);
+
     const [proxyType, setProxyType] = useState<TDropDownItem>(initItem);
-    const [countryType, setCountryType] = useState<TDropDownItem>(initItem);
+
     const [periodType, setPeriodType] = useState<TDropDownItem>(initItem);
+    const [periodTypes, setPeriodTypes] = useState<TDropDownItem[]>(periods);
+
+    const [countryType, setCountryType] = useState<TDropDownItem>(initItem);
+
     const [countProxyType, setCountProxyType] = useState<TDropDownItem>(
         countTypes[0],
     );
-
-    useEffect(() => {
-        if (isInit) {
-            handlerIsInit(false);
-            setPurposeType(initItem);
-            setProxyType(initItem);
-            setCountryType(initItem);
-            setPeriodType(initItem);
-            setCountProxyType(countTypes[0]);
-        }
-    }, [isInit]);
 
     const handlerOnClick = (
         e: SyntheticEvent<HTMLElement>,
@@ -74,6 +71,47 @@ export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
         handlerOnClick(e, periodTypes, setPeriodType);
     };
 
+    useEffect(() => {
+        if (isInit) {
+            handlerIsInit(false);
+            setIsDisabledDropDowns(true);
+            setPurposeType(initItem);
+            setProxyType(initItem);
+            setCountryType(initItem);
+            setPeriodType(initItem);
+            setCountProxyType(countTypes[0]);
+        }
+    }, [isInit]);
+
+    useEffect(() => {
+        if (purposeType.text) {
+            setIsDisabledDropDowns(false);
+        }
+    }, [purposeType]);
+
+    // Фильтр
+    useEffect(() => {
+        if (countryType.tarifs) {
+            console.log(proxyType.text !== '');
+            if (proxyType.text === '') {
+                if (countryType.tarifs) {
+                    setPeriodType(countryType.tarifs[0]);
+                }
+                setPeriodTypes(countryType.tarifs);
+            } else {
+                const filtredTarifs = countryType.tarifs.filter(
+                    (item) => item.proxy === proxyType.text,
+                );
+
+                if (filtredTarifs) {
+                    setPeriodType(filtredTarifs[0]);
+                }
+                setPeriodTypes(filtredTarifs);
+            }
+        }
+    }, [countryType, proxyType]);
+
+
     return (
         <form className={styles.container} name="ProxyItem">
             <DropDown
@@ -85,42 +123,46 @@ export const ProxyItem = ({ isInit, handlerIsInit }: TProxyItemProps) => {
                 onClick={handlerOnClickPurpose}
                 currentValue={purposeType.text}
             />
-            <DropDown
-                placeholder="Выберите тип прокси"
-                id="d2"
-                labelText="Тип прокси"
-                activeId={proxyType.id}
-                items={proxyTypes}
-                onClick={handlerOnClickProxyType}
-                currentValue={proxyType.text}
-            />
-            <DropDown
-                placeholder="Выберите страну"
-                id="d3"
-                labelText="Страна"
-                activeId={countryType.id}
-                items={countryTypes}
-                onClick={handlerOnClickCountryType}
-                currentValue={countryType.text}
-            />
-            <DropDown
-                placeholder="Выберите кол-во прокси"
-                id="d4"
-                items={countTypes}
-                labelText="Количество прокси"
-                activeId={countProxyType.id}
-                onClick={handlerOnClickCountProxyType}
-                currentValue={countProxyType.text}
-            />
-            <DropDown
-                placeholder="Выберите срок"
-                id="d5"
-                labelText="Срок аренды"
-                activeId={periodType.id}
-                items={periodTypes}
-                onClick={handlerOnClickPeriodType}
-                currentValue={periodType.text}
-            />
+            {!isDisableDropDowns && (
+                <>
+                    <DropDown
+                        placeholder="Выберите тип прокси"
+                        id="d2"
+                        labelText="Тип прокси"
+                        activeId={proxyType.id}
+                        items={proxyTypes}
+                        onClick={handlerOnClickProxyType}
+                        currentValue={proxyType.text}
+                    />
+                    <DropDown
+                        placeholder="Выберите страну"
+                        id="d3"
+                        labelText="Страна"
+                        activeId={countryType.id}
+                        items={countryTypes}
+                        onClick={handlerOnClickCountryType}
+                        currentValue={countryType.text}
+                    />
+                    <DropDown
+                        placeholder="Выберите кол-во прокси"
+                        id="d4"
+                        items={countTypes}
+                        labelText="Количество прокси"
+                        activeId={countProxyType.id}
+                        onClick={handlerOnClickCountProxyType}
+                        currentValue={countProxyType.text}
+                    />
+                    <DropDown
+                        placeholder="Выберите срок"
+                        id="d5"
+                        labelText="Срок аренды"
+                        activeId={periodType.id}
+                        items={periodTypes}
+                        onClick={handlerOnClickPeriodType}
+                        currentValue={periodType.text}
+                    />
+                </>
+            )}
         </form>
     );
 };

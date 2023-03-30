@@ -1,0 +1,18 @@
+.total__text {
+    color: var(--black-text-light);
+    margin-bottom: 0;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.total__button {
+    font-size: 16px;
+    background-color: var(--primary-btn);
+    width: 100%;
+    height: 65px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 177.69%;
+    text-align: center;
+}

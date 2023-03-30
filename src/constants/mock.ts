@@ -1,8 +1,11 @@
 
+type Country = 'Россия' | 'Австралия' | 'Бангладеш';
+
 type Tarif = {
-    label: string;
+    id: string;
+    text: string;
     cost: number;
-    proxy: TDropDownItem;
+    proxy: string;
     country: Country;
 };
 
@@ -22,9 +25,6 @@ export const purposeTypes: TDropDownItems = [{
     id: '0', text: 'Для любых сайтов',
 }];
 
-
-
-
 export const proxyTypes: TDropDownItems = [
     {
         id: '0',
@@ -39,9 +39,6 @@ export const proxyTypes: TDropDownItems = [
         text: 'Серверные IPv6 индивидуальные',
     },
 ];
-
-
-type Country = 'Россия' | 'Австралия' | 'Бангладеш';
 
 export const baseTarifs: TDropDownItems = [
     {
@@ -61,30 +58,31 @@ export const baseTarifs: TDropDownItems = [
     },
 ];
 
-
-
 const getTarifs = (country: Country) => {
     const baseCosts = baseTarifs.find((item) => item.text === country )?.baseCosts || [];
     const tarifs = [];
+    let id = 0;
     for (let i = 0; i < periods.length; i++) {
         for (let j = 0; j < proxyTypes.length; j++) {
-            let label = '';
+            let text = '';
             const cost = baseCosts[j] * periods[i];
             switch (i) {
                 case 0:
-                    label = `1 день от ${cost} ₽/шт `;
+                    text = `1 день от ${cost} ₽/шт `;
                     break;
                 case 1:
-                    label = `7 дней от ${cost} ₽/шт `;
+                    text = `7 дней от ${cost} ₽/шт `;
                     break;
                 case 2:
-                    label = `1 месяц от ${cost} ₽/шт `;
+                    text = `1 месяц от ${cost} ₽/шт `;
                     break;
                 default:
-                    label = '';
+                    text = '';
                     break;
             }
-            tarifs.push({ label, cost, proxy: proxyTypes[j], country });
+            
+            tarifs.push({ text, cost, proxy: proxyTypes[j].text, country, id: String(id) });
+            id += 1;
         }
     }
 
@@ -112,11 +110,6 @@ export const countryTypes: TDropDownItems = [
         tarifs: getTarifs('Россия'),
     },
 ];
-
-console.log(getTarifs('Австралия'));
-
-
-console.log(countryTypes);
 
 export const periodTypes: TDropDownItems = [
     {
@@ -155,3 +148,5 @@ export const countTypes: TDropDownItems = [
         text: '5',
     },
 ];
+
+console.log(countryTypes);

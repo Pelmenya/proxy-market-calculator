@@ -14,6 +14,7 @@ body {
     --black-text-light: #484859;
     --error-color: #e42828;
     --label-text: #2e2e42b3;
+    --primary-btn: #00f;
 }
 
 .dropdown-item {
