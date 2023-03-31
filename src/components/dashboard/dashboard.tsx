@@ -6,6 +6,7 @@ import { setProxys } from '../../redux/slices/proxys';
 import { TBaseProps } from '../../types/t-base-props';
 import { BackIcon } from '../icons/back-icon';
 import { DashboardStepOne } from './dashboard-step-one/dashboard-step-one';
+import { DashboardStepTree } from './dashboard-step-three/dashboard-step-three';
 import { DashboardStepTwo } from './dashboard-step-two/dashboard-step-two';
 import styles from './dashboard.module.css';
 
@@ -43,6 +44,7 @@ export const Dashboard = ({ title }: TDashBoard) => {
 
             {step === 1 && <DashboardStepOne />}
             {step === 2 && <DashboardStepTwo />}
+            {step === 3 && <DashboardStepTree />}
         </div>
     );
 };

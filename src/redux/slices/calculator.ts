@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 export interface ICalculatorState {
-    step: 1 | 2
+    step: 1 | 2 | 3
 }
 
 const initialState: ICalculatorState = {

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { countTypes, initItem, TDropDownItem } from '../../constants/mock';
 
-
 export type TProxy =
     {
         id: number;
