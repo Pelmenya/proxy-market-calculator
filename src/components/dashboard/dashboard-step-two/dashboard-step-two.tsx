@@ -7,11 +7,16 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getProxysState } from '../../../redux/selectors/proxys';
 import { ButtonLink } from '../components/button-link/button-link';
 import { setCalculatorStep } from '../../../redux/slices/calculator';
-import { addInitProxy, setInitProxysState } from '../../../redux/slices/proxys';
+import {
+    addInitProxy,
+    setInitProxysState,
+    setProxys,
+} from '../../../redux/slices/proxys';
 import { ProxyItem } from '../proxy-item/proxy-item';
 import { useTotalCost } from '../../../hooks/use-total-cost/use-total-cost';
 import { setTotalCost } from '../../../redux/slices/total-cost';
 import { getTotalCostState } from '../../../redux/selectors/total-cost';
+import { ProxyReady } from '../proxy-ready/proxy-ready';
 
 export const DashboardStepTwo = () => {
     const dispatch = useAppDispatch();
@@ -31,10 +36,15 @@ export const DashboardStepTwo = () => {
         dispatch(setCalculatorStep(1));
     }, []);
 
-    const handlerDeleteProxy = useCallback(() => {
-        dispatch(setInitProxysState());
-        dispatch(setCalculatorStep(1));
-    }, []);
+    const handlerDeleteProxy = (id: number) => {
+        const filterProxys = proxys
+            .filter((proxy) => proxy.id !== id)
+            .map((proxy, idx) => ({ ...proxy, id: idx }));
+        const last = filterProxys[filterProxys.length - 1];
+
+        dispatch(setProxys(filterProxys));
+        setReadyOrders(readyOrders - 1);
+    };
 
     useEffect(() => {
         if (totalCost !== globalTotalCost && readyOrders === 1) {
@@ -43,10 +53,16 @@ export const DashboardStepTwo = () => {
     }, [totalCost]);
 
     useEffect(() => {
-        if (readyOrders === 0) {
+        if (
+            readyOrders === 0 ||
+            proxys[0].purposeType.text === '' ||
+            proxys[0].proxyType.text === '' ||
+            proxys[0].countProxyType.text === '' ||
+            proxys[0].periodType.text === ''
+        ) {
             handlerSetInitProxysState();
         }
-    }, [readyOrders]);
+    }, [readyOrders, proxys[0]]);
 
     return (
         <div className={styles.wrapper}>
@@ -54,17 +70,13 @@ export const DashboardStepTwo = () => {
                 {readyOrders === 1 ? (
                     <div className="d-flex flex-column gap-4">
                         <div className="d-flex justify-content-between align-items-center">
-                            <p className="m-0">Прокси</p>
-                            <p className="m-0">
-                                {proxys[0].purposeType.text},{' '}
-                                {proxys[0].proxyType.text},{' '}
-                                {proxys[0].countProxyType.text}{'шт., '}
-                                {proxys[0].countryType.text},{' '}
-                                {proxys[0].periodType.text.split('от')[0]}
-                            </p>
+                            <ProxyReady proxy={proxys[0]} />
                             <ButtonLink
                                 icon="delete"
-                                onClick={() => setReadyOrders(readyOrders - 1)}
+                                onClick={() => {
+                                    setReadyOrders(readyOrders - 1);
+                                    handlerSetInitProxysState();
+                                }}
                             >
                                 <>Удалить</>
                             </ButtonLink>
@@ -78,22 +90,17 @@ export const DashboardStepTwo = () => {
                         {proxys.map((proxy, idx) => {
                             if (idx < readyOrders - 1)
                                 return (
-                                    <div key={proxy.id} className="d-flex justify-content-between align-items-center">
-                                        <p className="m-0">Прокси</p>
-                                        <p className="m-0">
-                                            {proxy.purposeType.text},{' '}
-                                            {proxy.proxyType.text},{' '}
-                                            {proxy.countProxyType.text}{'шт., '}
-                                            {proxy.countryType.text},{' '}
-                                            {
-                                                proxy.periodType.text.split(
-                                                    'от',
-                                                )[0]
-                                            }
-                                        </p>
+                                    <div
+                                        key={proxy.id}
+                                        className="d-flex justify-content-between align-items-center"
+                                    >
+                                        <ProxyReady proxy={proxy} />
                                         <ButtonLink
                                             icon="delete"
-                                            onClick={handlerDeleteProxy}
+                                            onClick={() => {
+                                                setReadyOrders(readyOrders - 1);
+                                                handlerDeleteProxy(proxy.id);
+                                            }}
                                         >
                                             <>Удалить</>
                                         </ButtonLink>
