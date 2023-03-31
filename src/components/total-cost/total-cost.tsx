@@ -1,14 +1,13 @@
 import { Button } from 'react-bootstrap';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { getTotalCostState } from '../../redux/selectors/total-cost';
+import { useTotalCost } from '../../hooks/use-total-cost/use-total-cost';
+import { useAppDispatch } from '../../redux/hooks';
 import { setCalculatorStep } from '../../redux/slices/calculator';
+import { setTotalCost } from '../../redux/slices/total-cost';
 import styles from './total-cost.module.css';
 
-
 export const TotalCost = () => {
-    const { totalCost } = useAppSelector(getTotalCostState);
+    const { totalCost } = useTotalCost();
     const dispatch = useAppDispatch();
-
 
     return (
         <div className="container p-0 mt-3">
@@ -37,7 +36,12 @@ export const TotalCost = () => {
                         variant="primary"
                         size="lg"
                         className={styles.total__button}
-                        onClick={() => dispatch(setCalculatorStep(2))}
+                        onClick={() => {
+                            if (totalCost) {
+                                dispatch(setCalculatorStep(2));
+                                dispatch(setTotalCost(totalCost));
+                            }
+                        }}
                     >
                         Оформить заказ
                     </Button>

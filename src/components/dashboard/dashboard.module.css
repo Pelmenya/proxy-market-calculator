@@ -50,3 +50,26 @@
     line-height: 1;
     color: var(--black-text-light);
 }
+
+
+.delete__icon{
+    fill: var(--primary-btn);
+}
+
+.delete__link{
+    border-bottom: 1px solid var(--primary-btn);
+    line-height: 1;
+    color: var(--primary-btn);
+}
+
+.delete__button {
+    color: var(--primary-btn);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 0;
+    padding-right:  30px;
+}

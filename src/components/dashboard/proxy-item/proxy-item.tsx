@@ -4,7 +4,6 @@ import { DropDown } from '../../drop-down/drop-down';
 import {
     countryTypes,
     countTypes,
-    initItem,
     periodTypes as periods,
     proxyTypes,
     purposeTypes,
@@ -15,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { getCalculatorState } from '../../../redux/selectors/calculator';
 import { setTotalCost } from '../../../redux/slices/total-cost';
 import { getProxysState } from '../../../redux/selectors/proxys';
-import { setInitState, setProxys } from '../../../redux/slices/proxys';
+import { setInitProxysState, setProxys } from '../../../redux/slices/proxys';
 
 export type TProxyItemProps = {
     proxyId: number;
@@ -34,7 +33,9 @@ export const ProxyItem = ({
 
     const [isDisableDropDowns, setIsDisabledDropDowns] = useState(true);
 
-    const [purposeType, setPurposeType] = useState<TDropDownItem>(proxys[proxyId].purposeType);
+    const [purposeType, setPurposeType] = useState<TDropDownItem>(
+        proxys[proxyId].purposeType,
+    );
     const [proxyType, setProxyType] = useState<TDropDownItem>(
         proxys[proxyId].proxyType,
     );
@@ -90,7 +91,7 @@ export const ProxyItem = ({
                 if (step === 1) {
                     setIsDisabledDropDowns(true);
                     dispatch(setTotalCost(0));
-                    dispatch(setInitState());
+                    dispatch(setInitProxysState());
                 }
             }
         }
@@ -114,7 +115,6 @@ export const ProxyItem = ({
                 const filtredTarifs = countryType.tarifs.filter(
                     (item) => item.proxy === proxyType.text,
                 );
-
                 if (filtredTarifs) {
                     setPeriodType(filtredTarifs[0]);
                 }
@@ -131,25 +131,22 @@ export const ProxyItem = ({
             !!countProxyType.text &&
             !!periodType.text
         ) {
-            let total = countryType.tarifs?.find(
-                (item) => item.text === periodType.text,
-            )?.cost;
-            if (total) {
-                total = total * Number(countProxyType.text);
-                dispatch(setTotalCost(total));
-                dispatch(
-                    setProxys([{
+            const arrFilter = proxys.filter((item) => item.id !== proxyId);
+            dispatch(
+                setProxys([
+                    ...arrFilter,
+                    {
                         id: proxyId,
                         purposeType,
                         proxyType,
                         periodType,
                         countryType,
                         countProxyType,
-                    }]),
-                );
-            }
+                    },
+                ]),
+            );
         }
-    }, [step, countryType, proxyType, countProxyType, periodType, purposeType]);
+    }, [countryType, proxyType, countProxyType, periodType, purposeType]);
 
     return (
         <form className={styles.container} name="ProxyItem">

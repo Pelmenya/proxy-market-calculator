@@ -153,5 +153,3 @@ export const countTypes: TDropDownItems = [
         text: '5',
     },
 ];
-
-console.log(countryTypes);

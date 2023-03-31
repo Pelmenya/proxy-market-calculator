@@ -17,14 +17,14 @@ export const Dashboard = ({ title }: TDashBoard) => {
 
     return (
         <div className={styles.dashboard}>
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex justify-content-between">
                 <h1 className={styles.title}>{title}</h1>
                 {step === 2 && (
                     <button
                         onClick={() => dispatch(setCalculatorStep(1))}
                         className={styles.back__button}
                     >
-                        <BackIcon className={styles.back__icon} />{' '}
+                        <BackIcon className={styles.back__icon} />
                         <span className={styles.back__link}>Назад</span>
                     </button>
                 )}

@@ -36,12 +36,15 @@ export const proxysSlice = createSlice({
         setProxys(state, action) {
             state.proxys = action.payload;
         },
-        setInitState(state) {
+        setInitProxysState(state) {
             state.proxys = initialState.proxys;
+        },
+        addInitProxy(state) {
+            state.proxys = [...state.proxys, { ...initialState.proxys[0], id: state.proxys.length }];
         },
 
     },
 },
 );
 
-export const { setProxys, setInitState } = proxysSlice.actions;
+export const { setProxys, setInitProxysState, addInitProxy } = proxysSlice.actions;
