@@ -1,6 +1,8 @@
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { getCalculatorState } from '../../redux/selectors/calculator';
+import { getProxysState } from '../../redux/selectors/proxys';
 import { setCalculatorStep } from '../../redux/slices/calculator';
+import { setProxys } from '../../redux/slices/proxys';
 import { TBaseProps } from '../../types/t-base-props';
 import { BackIcon } from '../icons/back-icon';
 import { DashboardStepOne } from './dashboard-step-one/dashboard-step-one';
@@ -13,6 +15,7 @@ export type TDashBoard = TBaseProps & {
 
 export const Dashboard = ({ title }: TDashBoard) => {
     const dispatch = useAppDispatch();
+    const { proxys } = useAppSelector(getProxysState);
     const { step } = useAppSelector(getCalculatorState);
 
     return (
@@ -21,7 +24,15 @@ export const Dashboard = ({ title }: TDashBoard) => {
                 <h1 className={styles.title}>{title}</h1>
                 {step === 2 && (
                     <button
-                        onClick={() => dispatch(setCalculatorStep(1))}
+                        onClick={() => {
+                            const arrProxy = proxys.find(
+                                (proxy) => proxy.id === 0,
+                            );
+                            if (arrProxy) {
+                                dispatch(setProxys([arrProxy]));
+                            }
+                            dispatch(setCalculatorStep(1));
+                        }}
                         className={styles.back__button}
                     >
                         <BackIcon className={styles.back__icon} />

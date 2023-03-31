@@ -58,6 +58,7 @@ export const DashboardStepTwo = () => {
                             <p className="m-0">
                                 {proxys[0].purposeType.text},{' '}
                                 {proxys[0].proxyType.text},{' '}
+                                {proxys[0].countProxyType.text}{'шт., '}
                                 {proxys[0].countryType.text},{' '}
                                 {proxys[0].periodType.text.split('от')[0]}
                             </p>
@@ -82,6 +83,7 @@ export const DashboardStepTwo = () => {
                                         <p className="m-0">
                                             {proxy.purposeType.text},{' '}
                                             {proxy.proxyType.text},{' '}
+                                            {proxy.countProxyType.text}{'шт., '}
                                             {proxy.countryType.text},{' '}
                                             {
                                                 proxy.periodType.text.split(
@@ -98,7 +100,6 @@ export const DashboardStepTwo = () => {
                                     </div>
                                 );
                         })}
-
                         {proxys.map((proxy, idx) => {
                             if (idx >= readyOrders - 1) {
                                 return (
