@@ -68,15 +68,13 @@ export const DashboardStepTwo = () => {
             <DashboardHead>
                 {readyOrders === 1 ? (
                     <div className="d-flex flex-column gap-4">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <ProxyReady
-                                proxy={proxys[0]}
-                                onClick={() => {
-                                    setReadyOrders(readyOrders - 1);
-                                    handlerSetInitProxysState();
-                                }}
-                            />
-                        </div>
+                        <ProxyReady
+                            proxy={proxys[0]}
+                            onClick={() => {
+                                setReadyOrders(readyOrders - 1);
+                                handlerSetInitProxysState();
+                            }}
+                        />
                         <ButtonLink icon="plus" onClick={handlerAddProxy}>
                             <>Добавить позицию</>
                         </ButtonLink>
@@ -86,18 +84,14 @@ export const DashboardStepTwo = () => {
                         {proxys.map((proxy, idx) => {
                             if (idx < readyOrders - 1)
                                 return (
-                                    <div
+                                    <ProxyReady
                                         key={proxy.id}
-                                        className="d-flex justify-content-between align-items-center"
-                                    >
-                                        <ProxyReady
-                                            proxy={proxy}
-                                            onClick={() => {
-                                                setReadyOrders(readyOrders - 1);
-                                                handlerDeleteProxy(proxy.id);
-                                            }}
-                                        />
-                                    </div>
+                                        proxy={proxy}
+                                        onClick={() => {
+                                            setReadyOrders(readyOrders - 1);
+                                            handlerDeleteProxy(proxy.id);
+                                        }}
+                                    />
                                 );
                         })}
                         {proxys.map((proxy, idx) => {

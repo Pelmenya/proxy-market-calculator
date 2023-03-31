@@ -1,13 +1,15 @@
 import { TProxy } from '../../../redux/slices/proxys';
 import { TBaseProps } from '../../../types/t-base-props';
 import { ButtonLink } from '../components/button-link/button-link';
+import cn from 'classnames';
+import styles from './proxy-ready.module.css';
 
 export type TProxyReadyProps = TBaseProps & {
     proxy: TProxy;
 };
 
 export const ProxyReady = ({ proxy, onClick }: TProxyReadyProps) => (
-    <>
+    <div className={styles.container}>
         <p className="m-0">Прокси #{proxy.id + 1}</p>
         <p className="m-0">
             {proxy.purposeType.text}, {proxy.proxyType.text},{' '}
@@ -18,5 +20,5 @@ export const ProxyReady = ({ proxy, onClick }: TProxyReadyProps) => (
         <ButtonLink icon="delete" onClick={onClick}>
             <>Удалить</>
         </ButtonLink>
-    </>
+    </div>
 );
