@@ -17,6 +17,7 @@ import { useTotalCost } from '../../../hooks/use-total-cost/use-total-cost';
 import { setTotalCost } from '../../../redux/slices/total-cost';
 import { getTotalCostState } from '../../../redux/selectors/total-cost';
 import { ProxyReady } from '../proxy-ready/proxy-ready';
+import { DashboardBody } from '../components/dashboard-body/dashbord-body';
 
 export const DashboardStepTwo = () => {
     const dispatch = useAppDispatch();
@@ -40,8 +41,6 @@ export const DashboardStepTwo = () => {
         const filterProxys = proxys
             .filter((proxy) => proxy.id !== id)
             .map((proxy, idx) => ({ ...proxy, id: idx }));
-        const last = filterProxys[filterProxys.length - 1];
-
         dispatch(setProxys(filterProxys));
         setReadyOrders(readyOrders - 1);
     };
@@ -70,16 +69,13 @@ export const DashboardStepTwo = () => {
                 {readyOrders === 1 ? (
                     <div className="d-flex flex-column gap-4">
                         <div className="d-flex justify-content-between align-items-center">
-                            <ProxyReady proxy={proxys[0]} />
-                            <ButtonLink
-                                icon="delete"
+                            <ProxyReady
+                                proxy={proxys[0]}
                                 onClick={() => {
                                     setReadyOrders(readyOrders - 1);
                                     handlerSetInitProxysState();
                                 }}
-                            >
-                                <>Удалить</>
-                            </ButtonLink>
+                            />
                         </div>
                         <ButtonLink icon="plus" onClick={handlerAddProxy}>
                             <>Добавить позицию</>
@@ -94,16 +90,13 @@ export const DashboardStepTwo = () => {
                                         key={proxy.id}
                                         className="d-flex justify-content-between align-items-center"
                                     >
-                                        <ProxyReady proxy={proxy} />
-                                        <ButtonLink
-                                            icon="delete"
+                                        <ProxyReady
+                                            proxy={proxy}
                                             onClick={() => {
                                                 setReadyOrders(readyOrders - 1);
                                                 handlerDeleteProxy(proxy.id);
                                             }}
-                                        >
-                                            <>Удалить</>
-                                        </ButtonLink>
+                                        />
                                     </div>
                                 );
                         })}
@@ -132,9 +125,9 @@ export const DashboardStepTwo = () => {
                     </div>
                 )}
             </DashboardHead>
-            <div className={styles.body}>
+            <DashboardBody>
                 <TotalCost />
-            </div>
+            </DashboardBody>
         </div>
     );
 };

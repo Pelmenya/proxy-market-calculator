@@ -17,7 +17,7 @@
     display: grid;
     width: 100vw;
     height: 100vh;
-    grid-template-columns: 300px minmax(320px, 985px) auto;
+    grid-template-columns: 300px minmax(320px, 1020px) auto;
 	grid-template-rows: 80px auto;
 
     grid-template-areas:
@@ -48,4 +48,14 @@
     grid-area: main;
     padding-top: 25px;
     padding-left: 35px;
+    padding-right: 35px;
+}
+
+@media (max-width: 1025px) {
+    .app {
+        grid-template-areas:
+        "header header header"
+        "main main ."
+    }
+ 
 }

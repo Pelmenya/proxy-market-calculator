@@ -5,6 +5,7 @@ import { ProxyItem } from '../proxy-item/proxy-item';
 
 import styles from '../dashboard.module.css';
 import { TotalCost } from '../../total-cost/total-cost';
+import { DashboardBody } from '../components/dashboard-body/dashbord-body';
 
 export const DashboardStepOne = () => {
     const clearBtnId = 'clear-button';
@@ -27,14 +28,16 @@ export const DashboardStepOne = () => {
                     onClick={handlerOnClickClearBtn}
                 />
             </DashboardHead>
-            <div className={styles.body}>
-                <ProxyItem
-                    handlerIsInit={setIsInit}
-                    isInit={isInit}
-                    proxyId={0}
-                />
-                <TotalCost />
-            </div>
+            <DashboardBody>
+                <>
+                    <ProxyItem
+                        handlerIsInit={setIsInit}
+                        isInit={isInit}
+                        proxyId={0}
+                    />
+                    <TotalCost />
+                </>
+            </DashboardBody>
         </div>
     );
 };
