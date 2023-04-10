@@ -4,6 +4,7 @@ import { DropDown } from '../../drop-down/drop-down';
 import {
     countryTypes,
     countTypes,
+    initItem,
     periodTypes as periods,
     proxyTypes,
     purposeTypes,
@@ -90,8 +91,13 @@ export const ProxyItem = ({
                 handlerIsInit(false);
                 if (step === 1) {
                     setIsDisabledDropDowns(true);
-                    dispatch(setTotalCost(0));
+                    setPeriodType(initItem);
+                    setPurposeType(initItem);
+                    setProxyType(initItem);
+                    setCountryType(initItem);
+                    setCountProxyType(countTypes[0]);
                     dispatch(setInitProxysState());
+                    dispatch(setTotalCost(0));
                 }
             }
         }
